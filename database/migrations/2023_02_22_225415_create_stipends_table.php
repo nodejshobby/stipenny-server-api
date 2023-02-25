@@ -15,7 +15,17 @@ class CreateStipendsTable extends Migration
     {
         Schema::create('stipends', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('user_id');
+            $table->string('title');
+            $table->float('amount');
+            $table->enum('interval', ['daily','weekly','monthly']);
+            $table->enum('status', ['running', 'paused', 'dued','completed'])->default('running');
+            $table->integer('success_billed')->default(0);
+            $table->integer('failed_billed')->default(0);
+            $table->dateTime('created_at');
+            $table->dateTime('next_billing');
+            $table->dateTime('due_date');
+            $table->integer('limit');
         });
     }
 

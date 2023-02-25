@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\V1;
 
+use Illuminate\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class StoreStipendRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +25,10 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'userId' => 'required',
-            'password' => 'required'
+            'title' => ['required','regex:/^[a-z][a-z ]+[a-z]$/i', 'min:3'],
+            'amount' => ['required','regex:/^[1-9][0-9]+[0-9]$/'],
+            'interval' => ['required','in:daily,weekly,monthly'],
+            'limit' => 'required|integer'
         ];
     }
 }

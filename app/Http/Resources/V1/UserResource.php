@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'lastname' => $this->lastname,
             'email' => $this->email,
             'role' => $this->role_id === 1 ? "admin" : "user",
+            'detail' => new UserDetailResource($this->detail)
         ];
     }
 }
