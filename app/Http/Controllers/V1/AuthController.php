@@ -29,7 +29,7 @@ class AuthController extends Controller
                 'phone_number' => $input['phone_number'],
             ]);
 
-            $user->sendEmailVerificationNotification();
+            // $user->sendEmailVerificationNotification();
             
             return response(new UserResource($user), 201);
         }
@@ -44,7 +44,7 @@ class AuthController extends Controller
         $input = $request->validated();
         $userId = $input['userId'];
 
-        $user = User::where('email', $userId)->whereHas('detail')->orWhereHas('detail', function ($query) use($userId) {
+        $user = User::where('email', $userId)->orWhereHas('detail', function ($query) use($userId) {
             $query->where('phone_number', $userId);
         })->first();
         
@@ -54,7 +54,7 @@ class AuthController extends Controller
                  $token = $user->createToken('main_auth')->plainTextToken;
 
                 Log::info("Token was successfully created for user id ".$user->id);
-                return response(['token' => $token],200);
+                return response(['token' => $token, 'user' => new UserResource($user) ],200);
             }
 
             Log::info("An anonymous user had a failed login");
@@ -130,5 +130,18 @@ class AuthController extends Controller
         }
 
         return response(["message" => "Password has been successfully changed"], 200);
+    }
+
+
+    public function user(Request $request){
+        $userId = $request->user()->id;
+        $user = user::find($userId);
+
+        return response(new UserResource($user), 200);
+    }
+
+    public function logout(Request $request){
+        $request->user()->tokens()->delete();
+        return response(["message" => "Logout is successful"], 200);
     }
 }

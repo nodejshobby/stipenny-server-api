@@ -15,15 +15,7 @@ class UserDetailResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'balance' => $this->balance,
-        'phone_number' => $this->phone_number,
-        'state_of_residence' => $this->state_of_residence,
-        'residence_address' => $this->residence_address,
-        'security_question' => $this->security_question,
-        'security_question_answer' => $this->security_question_answer,
-        'account_number' => $this->account_number,
-        'account_name' => $this->account_name,
-        'bank_name' => $this->bank_name,
+            'balance' => number_format($this->balance, 2, ".",",")
         ];
     }
 }

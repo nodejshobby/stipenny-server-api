@@ -14,7 +14,17 @@ class UserDetail extends Model
         'phone_country_code',
         'phone_number',
         'state_of_residence',
-        'residence_address',
+        'residence_address', 
+        'security_question',
+        'security_question_answer',
+        'account_number',
+        'account_name',
+        'bank_name'
+    ];
+
+    protected $hidden = [
+        'phone_country_code',
+        'phone_number',
         'security_question',
         'security_question_answer',
         'account_number',

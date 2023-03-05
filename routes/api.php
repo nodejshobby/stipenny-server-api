@@ -17,9 +17,7 @@ use App\Http\Controllers\V1\BeneficiaryController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 
 Route::prefix('v1')->group(function(){
     Route::post('/register', [AuthController::class, 'register']);
@@ -32,5 +30,8 @@ Route::prefix('v1')->group(function(){
 
     Route::post('/stipends/create', [StipendController::class, 'store'])->middleware('auth:sanctum');
     Route::post('/beneficiaries/create/{stipend}', [BeneficiaryController::class, 'store'])->middleware('auth:sanctum');
+    Route::get('/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
+    Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
 });
 
