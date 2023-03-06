@@ -29,7 +29,7 @@ class AuthController extends Controller
                 'phone_number' => $input['phone_number'],
             ]);
 
-            // $user->sendEmailVerificationNotification();
+            $user->sendEmailVerificationNotification();
             
             return response(new UserResource($user), 201);
         }
@@ -73,7 +73,7 @@ class AuthController extends Controller
 
             Log::info("An anonymous user tried expired or invalid verification link");
 
-            return response(["message" => "Invalid/Expired url provided"], 401);
+            return response(["message" => "Invalid/Expired url provided"], 400);
         }
 
         $user = User::findOrFail($id);

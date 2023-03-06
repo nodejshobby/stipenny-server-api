@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -30,6 +31,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+
+        // Created custom link email for verification
          VerifyEmail::createUrlUsing(function ($notifiable) {
             
             $frontendUrl = env('STIPENNY_CLIENT_URL');
@@ -44,6 +47,12 @@ class AuthServiceProvider extends ServiceProvider
             );
 
             return $frontendUrl . 'verify/?verify_url=' . urlencode($verifyUrl);
+        });
+
+        // Created custom reset link for email forgot password 
+        ResetPassword::createUrlUsing(function ($notifiable, $token) {
+             $frontendUrl = env('STIPENNY_CLIENT_URL');
+            return $frontendUrl ."reset/?token={$token}&email=". $notifiable->getEmailForPasswordReset();
         });
     }
 }
