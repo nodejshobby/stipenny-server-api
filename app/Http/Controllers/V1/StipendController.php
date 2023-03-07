@@ -66,6 +66,17 @@ class StipendController extends Controller
 
     }
 
+
+    /**
+     * Get Specific user stipends
+     */
+
+     public function getUserStipends(Request $request){
+        $stipends = $request->user()->stipends()->get();
+
+        return response($stipends,200);
+     }
+
     /**
      * Display the specified resource.
      *

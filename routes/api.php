@@ -29,6 +29,7 @@ Route::prefix('v1')->group(function(){
 
 
     Route::post('/stipends/create', [StipendController::class, 'store'])->middleware('auth:sanctum');
+    Route::get('/stipends/me', [StipendController::class, 'getUserStipends'])->middleware('auth:sanctum');
     Route::post('/beneficiaries/create/{stipend}', [BeneficiaryController::class, 'store'])->middleware('auth:sanctum');
     Route::get('/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
     Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
